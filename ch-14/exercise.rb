@@ -1,3 +1,4 @@
+#Encoding: UTF-8
 str = <<EOF
 Ruby is an object oriented programming language
 EOF
@@ -37,5 +38,36 @@ end
 def han2num(string)
   dig4 = dig3 = dig2 = dig1 = 0
   nstring = string.dup
-  nstring.gsub!(/yi/, 1)
+  nstring.gsub!(/一/, 1)
+  nstring.gsub!(/二/, 2)
+  nstring.gsub!(/三/, 3)
+  nstring.gsub!(/四/, 4)
+  nstring.gsub!(/五/, 5)
+  nstring.gsub!(/六/, 6)
+  nstring.gsub!(/七/, 7)
+  nstring.gsub!(/八/, 8)
+  nstring.gsub!(/九/, 9)
+  if nstring =~ /((\d)?千)?((\d)?百)?((\d)?十)?((\d)?$)/
+      if $1
+          dig4 = $2 || "1"
+      end
+      if $3
+          dig3 = $4 || "1"
+      end
+      if $5
+          dig2 = $6 || "1"
+      end
+      dig1 = $7 || 0
+  end
+  return (dig4 + dig3 + dig2 + dig1).to_i
 end
+
+
+p han2num("七千八百二十三")
+p han2num("千八百二十三")
+p han2num("八百二十三")
+p han2num("百二十三")
+p han2num("二十三")
+p han2num("十三")
+p han2num("三")
+
